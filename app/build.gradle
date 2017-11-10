@@ -1,0 +1,120 @@
+apply plugin: 'com.android.application'
+apply from: '../config/quality/quality.gradle'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "ostmodern.skylark"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events 'passed', 'skipped', 'failed', 'standardOut'
+                }
+            }
+        }
+    }
+
+    lintOptions {
+        lintConfig rootProject.file('lint.xml')
+        quiet false
+        abortOnError true
+        ignoreWarnings true
+    }
+
+    // Runs lint, checkstyle and findbugs from IDE on each build.
+    afterEvaluate {
+        applicationVariants.all {
+            variant ->
+                def variantName = variant.name.capitalize()
+                project.tasks["compile${variantName}Sources"].doLast {
+                    project.tasks["lint${variantName}"].execute()
+
+                    project.tasks["checkstyle"].execute() // Defined in quality.gradle
+                    project.tasks["findbugs"].execute() // Defined in quality.gradle
+                }
+        }
+    }
+}
+
+configurations.all {
+    dependencies {
+
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+        // Support Libraries
+        implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+        implementation "com.android.support:support-compat:$rootProject.supportLibraryVersion"
+        implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+        implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+
+        // RxJava
+        implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+        implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+        implementation "com.jakewharton.rxbinding2:rxbinding:$rootProject.rxBindingVersion"
+        implementation "com.jakewharton.rxbinding2:rxbinding-design:$rootProject.rxBindingVersion"
+        implementation "com.github.pwittchen:reactivenetwork-rx2:$rootProject.rxNetworkVersion"
+
+        // Guava
+        implementation "com.google.guava:guava:$rootProject.guavaVersion"
+
+        // Gson
+        implementation group: 'com.google.code.gson', name: 'gson', version: "$rootProject.gsonVersion"
+
+        // Timber
+        implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+        // Retrofit
+        implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+        implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+        implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+
+        //Butterknife
+        implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+        annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+        // Dagger
+        implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+        implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+        implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+        annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+        annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+        //Glide
+        implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+        annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
+        // Test libraries
+        androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+        androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
+        testImplementation "junit:junit:$rootProject.jUnitVersion"
+        testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+        testImplementation "org.robolectric:robolectric:$rootProject.robolectricVersion"
+
+    }
+    resolutionStrategy.force "com.google.code.findbugs:jsr305:$rootProject.findbugsVersion"
+    resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+}

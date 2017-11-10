@@ -1,0 +1,52 @@
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+
+check.dependsOn 'checkstyle', 'findbugs'
+
+dependencies {
+    checkstyle "com.puppycrawl.tools:checkstyle:$rootProject.checkStyleVersion"
+}
+
+def qualityConfigDir = "$project.rootDir/config/quality"
+def reportsDir = "$project.buildDir/reports"
+
+// Included and excluded directories for quality inspections
+def includedDirs = ['**/*.java']
+def excludedDirs = ['**/AppLogger.java', '**/gen/**', 'test/**/*.java', 'androidTest/**/*.java']
+
+task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code style checks') {
+    configFile file("$qualityConfigDir/checkstyle/checkstyle.xml")
+    ignoreFailures = false
+
+    source 'src'
+    includes = includedDirs
+    excludes = excludedDirs
+
+    classpath = files()
+}
+
+task findbugs(type: FindBugs,
+        group: 'Verification',
+        description: 'Inspect java bytecode for bugs',
+        dependsOn: ['compileDebugSources', 'compileReleaseSources']) {
+
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = file("$qualityConfigDir/findbugs/findbugs.xml")
+    classes = files("$project.rootDir/app/build/intermediates/classes")
+
+    source 'src'
+    includes = includedDirs
+    excludes = excludedDirs
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        html {
+            destination file("$reportsDir/findbugs/findbugs.html")
+        }
+    }
+
+    classpath = files()
+}
