@@ -42,6 +42,8 @@ ext {
     daggerVersion = '2.13'
     butterKnifeVersion = '8.8.1'
     glideVersion = '4.3.0'
+    okhttpVersion = '3.9.0'
+
 
 
     // Test tool versions

@@ -92,6 +92,10 @@ configurations.all {
         implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
         implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
+        // OkHttp
+        implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+        implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+
         //Butterknife
         implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
         annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"

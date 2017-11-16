@@ -7,17 +7,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ostmodern.skylark.model.Set;
+import ostmodern.skylark.model.SetUI;
 import ostmodern.skylarkClient.R;
 
 public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListViewHolder> {
 
-    private ArrayList<Set> sets = new ArrayList<>();
+    private ArrayList<SetUI> sets = new ArrayList<>();
 
     @Override
     public SetListAdapter.SetListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,9 +30,15 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
 
     @Override
     public void onBindViewHolder(SetListAdapter.SetListViewHolder holder, int position) {
-        final Set set = sets.get(position);
-        holder.txtSetTitle.setText(set.getTitle());
-        set.getTitle().length()
+        final SetUI setUI = sets.get(position);
+        holder.txtSetTitle.setText(setUI.getSet().getTitle());
+        holder.txtSetFilmCount.setText("");
+        if (setUI.getSet().getFilmCount() > 0) {
+            holder.txtSetFilmCount.setText(String.format("%d %s", setUI.getSet().getFilmCount(),
+                    holder.itemView.getResources().getString(R.string.films)));
+        }
+        Glide.with(holder.itemView.getContext()).load(setUI.getImage().getUrl())
+                .into(holder.imgSet);
     }
 
     @Override
@@ -38,7 +46,12 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
         return sets.size();
     }
 
-    public void updateDataSet(List<Set> setList) {
+    /**
+     * Updates data set with the new coming set list.
+     *
+     * @param setList list of set
+     */
+    public void updateDataSet(List<SetUI> setList) {
         this.sets.clear();
         sets.addAll(setList);
         notifyDataSetChanged();
@@ -47,6 +60,9 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
     protected class SetListViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.txt_set_title)
         TextView txtSetTitle;
+
+        @BindView(R.id.txt_set_film_count)
+        TextView txtSetFilmCount;
 
         @BindView(R.id.img_set)
         ImageView imgSet;

@@ -3,7 +3,7 @@ package ostmodern.skylark.ui;
 import java.util.List;
 
 import ostmodern.skylark.common.BasePresenter;
-import ostmodern.skylark.model.Set;
+import ostmodern.skylark.model.SetUI;
 
 public interface SetListContract {
 
@@ -16,7 +16,7 @@ public interface SetListContract {
          *
          * @param setList list of set
          */
-        void showSetList(List<Set> setList);
+        void showSetList(List<SetUI> setList);
 
     }
 

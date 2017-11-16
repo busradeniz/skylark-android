@@ -3,7 +3,7 @@ package ostmodern.skylark.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +16,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ostmodern.skylark.di.Injectable;
-import ostmodern.skylark.model.Set;
-import ostmodern.skylark.ui.common.NavigationController;
+import ostmodern.skylark.model.SetUI;
 import ostmodern.skylarkClient.R;
 
 public class SetListFragment extends Fragment implements Injectable, SetListContract.View {
 
     @Inject
-    NavigationController navigationController;
-
-    @Inject
-    SetListPresenter setListPresenter;
+    SetListContract.Presenter setListPresenter;
 
     @BindView(R.id.recycler_sets)
     RecyclerView recyclerViewSets;
@@ -38,15 +34,11 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_sets, container, false);
-        ButterKnife.bind(this, root);
-        return root;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_sets, container, false);
+        ButterKnife.bind(this, view);
         initSetsRecyclerView();
+
+        return view;
     }
 
     @Override
@@ -62,13 +54,13 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     }
 
     @Override
-    public void showSetList(List<Set> setList) {
+    public void showSetList(List<SetUI> setList) {
         setListAdapter.updateDataSet(setList);
     }
 
     private void initSetsRecyclerView() {
         setListAdapter = new SetListAdapter();
-        recyclerViewSets.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewSets.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewSets.setAdapter(setListAdapter);
     }
 }
