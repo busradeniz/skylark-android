@@ -1,6 +1,7 @@
-package ostmodern.skylark.api;
+package ostmodern.skylark.repository.remote;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import ostmodern.skylark.model.Image;
 import retrofit2.http.GET;
 import retrofit2.http.Url;
@@ -12,6 +13,6 @@ public interface SkylarkClient {
     Observable<SetApiResponse> getSetList();
 
     @GET
-    Observable<Image> getImageOfSet(@Url String imagePath);
+    Single<Image> getImageOfSet(@Url String imagePath);
 
 }

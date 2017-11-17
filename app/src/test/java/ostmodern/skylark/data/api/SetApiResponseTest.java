@@ -1,4 +1,4 @@
-package ostmodern.skylark.api;
+package ostmodern.skylark.data.api;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import ostmodern.skylark.repository.remote.SetApiResponse;
 
 /**
  * Created by busradeniz on 13/11/2017.

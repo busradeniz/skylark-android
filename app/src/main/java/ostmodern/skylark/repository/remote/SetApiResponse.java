@@ -1,4 +1,4 @@
-package ostmodern.skylark.api;
+package ostmodern.skylark.repository.remote;
 
 import java.util.List;
 

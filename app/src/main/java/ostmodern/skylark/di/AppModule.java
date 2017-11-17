@@ -1,6 +1,9 @@
 package ostmodern.skylark.di;
 
 
+import android.app.Application;
+import android.arch.persistence.room.Room;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,8 +18,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import ostmodern.skylark.api.SkylarkClient;
-import ostmodern.skylark.api.SkylarkService;
+import ostmodern.skylark.repository.SkylarkRepository;
+import ostmodern.skylark.repository.local.SkylarkDatabase;
+import ostmodern.skylark.repository.remote.SkylarkClient;
+import ostmodern.skylark.repository.remote.SkylarkService;
 import ostmodern.skylark.util.ReleaseTree;
 import ostmodern.skylark.util.SchedulerProvider;
 import retrofit2.Retrofit;
@@ -49,13 +54,9 @@ public class AppModule {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true);
-
-        final HttpLoggingInterceptor logging = new HttpLoggingInterceptor(message -> {
-            System.out.println(message);
-        });
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(logging);
-
+        HttpLoggingInterceptor httpLoggingInterceptor =
+                new HttpLoggingInterceptor(message -> System.out.println(message));
+        builder.addInterceptor(httpLoggingInterceptor);
         return builder.build();
     }
 
@@ -73,6 +74,21 @@ public class AppModule {
     SkylarkService provideSkylarkService(SkylarkClient skylarkClient) {
         return new SkylarkService(skylarkClient);
     }
+
+    @Singleton
+    @Provides
+    SkylarkDatabase providesAppDatabase(Application app) {
+        return Room.databaseBuilder(app,
+                SkylarkDatabase.class, "skylark-db").build();
+    }
+
+    @Singleton
+    @Provides
+    SkylarkRepository providesSkylarkRepository(SkylarkService skylarkService,
+                                                SkylarkDatabase skylarkDatabase) {
+        return new SkylarkRepository(skylarkService, skylarkDatabase);
+    }
+
 
     @Singleton
     @Provides

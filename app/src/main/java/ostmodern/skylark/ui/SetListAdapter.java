@@ -14,12 +14,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ostmodern.skylark.model.SetUI;
+import ostmodern.skylark.repository.local.SetEntity;
 import ostmodern.skylarkClient.R;
 
 public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListViewHolder> {
 
-    private ArrayList<SetUI> sets = new ArrayList<>();
+    private List<SetEntity> sets = new ArrayList<>();
 
     @Override
     public SetListAdapter.SetListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,14 +30,16 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
 
     @Override
     public void onBindViewHolder(SetListAdapter.SetListViewHolder holder, int position) {
-        final SetUI setUI = sets.get(position);
-        holder.txtSetTitle.setText(setUI.getSet().getTitle());
+        final SetEntity setEntity = sets.get(position);
+        holder.txtSetTitle.setText(setEntity.getTitle());
         holder.txtSetFilmCount.setText("");
-        if (setUI.getSet().getFilmCount() > 0) {
-            holder.txtSetFilmCount.setText(String.format("%d %s", setUI.getSet().getFilmCount(),
+        if (setEntity.getFilmCount() > 0) {
+            holder.txtSetFilmCount.setText(String.format("%d %s", setEntity.getFilmCount(),
                     holder.itemView.getResources().getString(R.string.films)));
         }
-        Glide.with(holder.itemView.getContext()).load(setUI.getImage().getUrl())
+        // TODO: set image in case of error.
+        Glide.with(holder.itemView.getContext())
+                .load(setEntity.getImageUrl())
                 .into(holder.imgSet);
     }
 
@@ -51,7 +53,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
      *
      * @param setList list of set
      */
-    public void updateDataSet(List<SetUI> setList) {
+    public void updateDataSet(List<SetEntity> setList) {
         this.sets.clear();
         sets.addAll(setList);
         notifyDataSetChanged();

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ostmodern.skylark.di.Injectable;
-import ostmodern.skylark.model.SetUI;
+import ostmodern.skylark.repository.local.SetEntity;
 import ostmodern.skylarkClient.R;
 
 public class SetListFragment extends Fragment implements Injectable, SetListContract.View {
@@ -54,7 +54,7 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     }
 
     @Override
-    public void showSetList(List<SetUI> setList) {
+    public void showSetList(List<SetEntity> setList) {
         setListAdapter.updateDataSet(setList);
     }
 
