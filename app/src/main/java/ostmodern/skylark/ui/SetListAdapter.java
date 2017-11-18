@@ -1,6 +1,7 @@
 package ostmodern.skylark.ui;
 
 import android.support.v4.content.ContextCompat;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,9 +85,11 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
      * @param setList list of set
      */
     public void updateDataSet(List<SetUI> setList) {
+        DiffUtil.DiffResult diffResult = DiffUtil
+                .calculateDiff(new SetUIDiffCallback(sets, setList), true);
         this.sets.clear();
         sets.addAll(setList);
-        notifyDataSetChanged();
+        diffResult.dispatchUpdatesTo(this);
     }
 
     protected class SetListViewHolder extends RecyclerView.ViewHolder {
