@@ -20,7 +20,7 @@ public class SkylarkGlideModule extends AppGlideModule {
         // CHECKSTYLE.ON: MagicNumber
         builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskCacheSizeBytes));
         builder.setDefaultRequestOptions(new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.DATA));
+                .diskCacheStrategy(DiskCacheStrategy.ALL));
 
         builder.setConnectivityMonitorFactory(new DefaultConnectivityMonitorFactory());
     }

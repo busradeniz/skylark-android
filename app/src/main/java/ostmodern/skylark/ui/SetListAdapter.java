@@ -23,6 +23,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.local.SetEntity;
+import ostmodern.skylark.util.CustomGlideUrl;
 import ostmodern.skylarkClient.R;
 
 public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListViewHolder> {
@@ -58,7 +59,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
         }
         // TODO: set image in case of error.
         Glide.with(holder.itemView.getContext())
-                .load(setEntity.getImageUrl())
+                .load(new CustomGlideUrl(setEntity.getImageUrl()))
                 .into(holder.imgSet);
 
         RxView.clicks(holder.imgFavourite).debounce(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
