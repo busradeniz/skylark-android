@@ -1,6 +1,7 @@
 package ostmodern.skylark.repository.remote;
 
-import android.util.Pair;
+
+import android.support.v4.util.Pair;
 
 import java.util.List;
 
@@ -28,9 +29,9 @@ public class SkylarkService {
      */
     public Observable<List<Pair<Set, Image>>> getSetList() {
         return skylarkClient.getSetList()
-                .map(setApiResponse -> setApiResponse.getObjects())
+                .map(SetApiResponse::getObjects)
                 .flatMap(Observable::fromIterable)
-                .flatMap(set -> getSetImagePair(set))
+                .flatMap(this::getSetImagePair)
                 .toList()
                 .toObservable();
     }
@@ -46,7 +47,7 @@ public class SkylarkService {
         }
     }
 
-    public Single<Image> getImageOfSet(String imagePath) {
+    private Single<Image> getImageOfSet(String imagePath) {
         return skylarkClient.getImageOfSet(imagePath);
     }
 }

@@ -2,8 +2,9 @@ package ostmodern.skylark.ui;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import ostmodern.skylark.common.BasePresenter;
-import ostmodern.skylark.repository.local.SetEntity;
+import ostmodern.skylark.model.SetUI;
 
 public interface SetListContract {
 
@@ -16,12 +17,16 @@ public interface SetListContract {
          *
          * @param setList list of set
          */
-        void showSetList(List<SetEntity> setList);
+        void showSetList(List<SetUI> setList);
 
+        /**
+         * Returns callback for favourite buttons.
+         *
+         * @return observable set ui.
+         */
+        Observable<SetUI> getFavouriteObservable();
     }
 
     interface Presenter extends BasePresenter {
-
-
     }
 }

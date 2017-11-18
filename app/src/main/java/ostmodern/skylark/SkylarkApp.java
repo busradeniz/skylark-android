@@ -10,6 +10,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import ostmodern.skylark.di.AppInjector;
+import ostmodern.skylark.util.Logs;
 import timber.log.Timber;
 
 
@@ -21,14 +22,12 @@ public class SkylarkApp extends Application implements HasActivityInjector {
     @Inject
     Timber.Tree tree;
 
-    private static final String TAG = "SkylarkApp";
-
     @Override
     public void onCreate() {
         super.onCreate();
         initInjector();
         Timber.plant(tree);
-        Timber.tag(TAG);
+        Timber.tag(Logs.APPLICATION_LOG_TAG);
     }
 
     @VisibleForTesting

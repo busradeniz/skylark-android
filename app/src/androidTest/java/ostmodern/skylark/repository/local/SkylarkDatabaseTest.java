@@ -67,6 +67,44 @@ public class SkylarkDatabaseTest {
         result.assertValue(ImmutableList.of(episodeEntity));
     }
 
+    @Test
+    public void testFavorite() throws Exception {
+        // Given
+        String setId = "test-set-id-1";
+        SetEntity setEntity = new SetEntity(setId, "test-title", 3, "test-body",
+                "test-formatted-body", "test-summary", "test-image-url");
+        FavouriteEntity favouriteEntity = new FavouriteEntity(setId);
+
+        // When
+        database.setDao().insert(ImmutableList.of(setEntity));
+        database.favouriteDao().insertFavourite(favouriteEntity);
+
+        // Then
+        database.favouriteDao().getAll().test()
+                .assertNoErrors()
+                .assertValue(ImmutableList.of(favouriteEntity));
+    }
+
+    @Test
+    public void testUnfavorite() throws Exception {
+        // Given
+        String setId = "test-set-id-1";
+        SetEntity setEntity = new SetEntity(setId, "test-title", 3, "test-body",
+                "test-formatted-body", "test-summary", "test-image-url");
+        FavouriteEntity favouriteEntity = new FavouriteEntity(setId);
+
+        // When
+        database.setDao().insert(ImmutableList.of(setEntity));
+        database.favouriteDao().insertFavourite(favouriteEntity);
+        database.favouriteDao().deleteFavourite(favouriteEntity);
+
+        // Then
+        database.favouriteDao().getAll().test()
+                .assertNoErrors()
+                .assertValue(ImmutableList.of());
+
+    }
+
     @After
     public void tearDown() throws Exception {
         database.close();

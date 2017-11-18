@@ -1,4 +1,4 @@
-package ostmodern.skylark;
+package ostmodern.skylark.util;
 
 import android.content.Context;
 
@@ -10,9 +10,6 @@ import com.bumptech.glide.manager.DefaultConnectivityMonitorFactory;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
 
-/**
- * Created by busradeniz on 16/11/2017.
- */
 @GlideModule
 public class SkylarkGlideModule extends AppGlideModule {
 

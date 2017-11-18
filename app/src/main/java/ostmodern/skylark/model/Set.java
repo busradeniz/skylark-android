@@ -1,6 +1,9 @@
 package ostmodern.skylark.model;
 
-import java.util.ArrayList;
+import com.google.common.base.MoreObjects;
+
+import java.util.List;
+import java.util.Objects;
 
 
 public class Set {
@@ -11,9 +14,9 @@ public class Set {
     private final String body;
     private final String quote;
     private final String formattedBody;
-    private final ArrayList<String> imageUrls;
+    private final List<String> imageUrls;
     private final String summary;
-    private final ArrayList<Episode> items;
+    private final List<Episode> items;
 
     /**
      * Constructor for {@link Set}.
@@ -30,7 +33,7 @@ public class Set {
      */
     public Set(String uid, String title,
                int filmCount, String body, String quote, String formattedBody,
-               ArrayList<String> imageUrls, String summary, ArrayList<Episode> items) {
+               List<String> imageUrls, String summary, List<Episode> items) {
         this.uid = uid;
         this.title = title;
         this.filmCount = filmCount;
@@ -67,7 +70,7 @@ public class Set {
         return formattedBody;
     }
 
-    public ArrayList<String> getImageUrls() {
+    public List<String> getImageUrls() {
         return imageUrls;
     }
 
@@ -75,7 +78,50 @@ public class Set {
         return summary;
     }
 
-    public ArrayList<Episode> getItems() {
+    public List<Episode> getItems() {
         return items;
+    }
+
+    // CHECKSTYLE.OFF: CyclomaticComplexity
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Set set = (Set) obj;
+        return filmCount == set.filmCount
+                && Objects.equals(uid, set.uid)
+                && Objects.equals(title, set.title)
+                && Objects.equals(body, set.body)
+                && Objects.equals(quote, set.quote)
+                && Objects.equals(formattedBody, set.formattedBody)
+                && Objects.equals(imageUrls, set.imageUrls)
+                && Objects.equals(summary, set.summary)
+                && Objects.equals(items, set.items);
+    }
+    // CHECKSTYLE.ON: CyclomaticComplexity
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uid, title, filmCount, body, quote,
+                formattedBody, imageUrls, summary, items);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("uid", uid)
+                .add("title", title)
+                .add("filmCount", filmCount)
+                .add("body", body)
+                .add("quote", quote)
+                .add("formattedBody", formattedBody)
+                .add("imageUrls", imageUrls)
+                .add("summary", summary)
+                .add("items", items)
+                .toString();
     }
 }

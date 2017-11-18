@@ -12,7 +12,7 @@ def reportsDir = "$project.buildDir/reports"
 
 // Included and excluded directories for quality inspections
 def includedDirs = ['**/*.java']
-def excludedDirs = ['**/AppLogger.java', '**/gen/**', 'test/**/*.java', 'androidTest/**/*.java']
+def excludedDirs = ['**/AppLogger.java', '**/gen/**', '**/test/**/*.java', 'androidTest/**/*.java']
 
 task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code style checks') {
     configFile file("$qualityConfigDir/checkstyle/checkstyle.xml")
@@ -21,6 +21,10 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     source 'src'
     includes = includedDirs
     excludes = excludedDirs
+
+    reports.xml.enabled = false
+    reports.html.enabled = true
+    reports.html.stylesheet = resources.text.fromFile("$qualityConfigDir/checkstyle/checkstyle-custom.xsl")
 
     classpath = files()
 }

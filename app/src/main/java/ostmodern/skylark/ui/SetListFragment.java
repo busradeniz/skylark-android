@@ -15,8 +15,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
 import ostmodern.skylark.di.Injectable;
-import ostmodern.skylark.repository.local.SetEntity;
+import ostmodern.skylark.model.SetUI;
 import ostmodern.skylarkClient.R;
 
 public class SetListFragment extends Fragment implements Injectable, SetListContract.View {
@@ -31,7 +32,8 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sets, container, false);
@@ -54,7 +56,7 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     }
 
     @Override
-    public void showSetList(List<SetEntity> setList) {
+    public void showSetList(List<SetUI> setList) {
         setListAdapter.updateDataSet(setList);
     }
 
@@ -62,6 +64,11 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
         setListAdapter = new SetListAdapter();
         recyclerViewSets.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewSets.setAdapter(setListAdapter);
+    }
+
+    @Override
+    public Observable<SetUI> getFavouriteObservable() {
+        return setListAdapter.getFavouriteObservable();
     }
 }
 

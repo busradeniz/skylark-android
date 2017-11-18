@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="220dp"
+    android:layout_width="210dp"
     android:layout_height="180dp"
     android:orientation="vertical">
 
@@ -29,4 +29,15 @@
         android:layout_gravity="center"
         android:textColor="@android:color/white"
         android:textSize="@dimen/set_film_count_txt_size" />
+
+    <ImageView
+        android:id="@+id/img_favourite"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:background="?attr/selectableItemBackground"
+        android:src="@mipmap/unfavourite" />
 </RelativeLayout>
