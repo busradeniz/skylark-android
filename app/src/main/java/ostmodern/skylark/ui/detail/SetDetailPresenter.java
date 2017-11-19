@@ -1,5 +1,7 @@
 package ostmodern.skylark.ui.detail;
 
+import android.support.annotation.VisibleForTesting;
+
 import io.reactivex.subjects.PublishSubject;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.SkylarkRepository;
@@ -58,7 +60,7 @@ public class SetDetailPresenter extends SetDetailContract.Presenter {
     }
 
     private void subscribeToSkylarkService() {
-        skylarkRepository.getSetById(selectedSetId)
+        addDisposable(skylarkRepository.getSetById(selectedSetId)
                 .subscribeOn(getSchedulerProvider().getIoScheduler())
                 .observeOn(getSchedulerProvider().getUiScheduler())
                 .subscribe(setUI -> {
@@ -66,7 +68,7 @@ public class SetDetailPresenter extends SetDetailContract.Presenter {
                     view.showSetDetails(setUI);
                 }, throwable -> Timber.e(throwable,
                         "Cannot get set from repository. Error Message: %s",
-                        throwable.getMessage()));
+                        throwable.getMessage())));
     }
 
     private void subscribeUpdateFavorStatus() {
@@ -91,5 +93,13 @@ public class SetDetailPresenter extends SetDetailContract.Presenter {
         return view;
     }
 
+    @VisibleForTesting
+    SetUI getSelectedSet() {
+        return selectedSet;
+    }
 
+    @VisibleForTesting
+    void setSelectedSet(SetUI selectedSet) {
+        this.selectedSet = selectedSet;
+    }
 }

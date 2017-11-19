@@ -38,7 +38,6 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     @Inject
     NavigationController navigationController;
 
-
     private SetListAdapter setListAdapter;
 
     @Nullable
