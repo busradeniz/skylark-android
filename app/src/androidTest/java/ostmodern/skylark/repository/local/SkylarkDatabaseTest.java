@@ -36,7 +36,7 @@ public class SkylarkDatabaseTest {
     public void testReadAfterWriteSets() throws Exception {
         // Given
         SetEntity setEntity = new SetEntity("test-set-id-1", "test-title", 3,
-                "test-body", "test-formatted-body", "test-summary", "test-image-url");
+                "test-formatted-body", "test-image-url");
 
         // When
         database.setDao().insert(ImmutableList.of(setEntity));
@@ -52,8 +52,8 @@ public class SkylarkDatabaseTest {
     public void testReadAfterWriteEpisode() throws Exception {
         // Given
         String setId = "test-set-id-1";
-        SetEntity setEntity = new SetEntity(setId, "test-title", 3, "test-body",
-                "test-formatted-body", "test-summary", "test-image-url");
+        SetEntity setEntity = new SetEntity(setId, "test-title", 3,
+                "test-formatted-body", "test-image-url");
         EpisodeEntity episodeEntity = new EpisodeEntity("test-id-1", "test-content-url",
                 "test-content-type", setId);
 
@@ -71,8 +71,8 @@ public class SkylarkDatabaseTest {
     public void testFavorite() throws Exception {
         // Given
         String setId = "test-set-id-1";
-        SetEntity setEntity = new SetEntity(setId, "test-title", 3, "test-body",
-                "test-formatted-body", "test-summary", "test-image-url");
+        SetEntity setEntity = new SetEntity(setId, "test-title", 3,
+                "test-formatted-body", "test-image-url");
         FavouriteEntity favouriteEntity = new FavouriteEntity(setId);
 
         // When
@@ -89,8 +89,8 @@ public class SkylarkDatabaseTest {
     public void testUnfavorite() throws Exception {
         // Given
         String setId = "test-set-id-1";
-        SetEntity setEntity = new SetEntity(setId, "test-title", 3, "test-body",
-                "test-formatted-body", "test-summary", "test-image-url");
+        SetEntity setEntity = new SetEntity(setId, "test-title", 3,
+                "test-formatted-body", "test-image-url");
         FavouriteEntity favouriteEntity = new FavouriteEntity(setId);
 
         // When

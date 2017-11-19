@@ -19,6 +19,7 @@ import io.reactivex.Single;
 import io.reactivex.subscribers.TestSubscriber;
 import ostmodern.skylark.model.Image;
 import ostmodern.skylark.model.Set;
+import ostmodern.skylark.repository.remote.ImageApiResponse;
 import ostmodern.skylark.repository.remote.SetApiResponse;
 import ostmodern.skylark.repository.remote.SkylarkClient;
 import ostmodern.skylark.repository.remote.SkylarkService;
@@ -44,8 +45,8 @@ public class SkylarkServiceTest {
         // Given
         given(skylarkClient.getSetList())
                 .willReturn(Observable.just(new SetApiResponse(ImmutableList.of(SET_WITHOUT_IMAGE, SET_WITH_IMAGE))));
-        given(skylarkClient.getImageOfSet("/api/images/mock-image-1/"))
-                .willReturn(Single.just(MOCK_IMAGE_1));
+        given(skylarkClient.getImageList())
+                .willReturn(Observable.just(new ImageApiResponse(ImmutableList.of(MOCK_IMAGE_1))));
 
         // When
         TestSubscriber<List<Pair<Set, Image>>> response = skylarkService.getSetList()
@@ -59,6 +60,6 @@ public class SkylarkServiceTest {
                     Pair.create(SET_WITHOUT_IMAGE, DEFAULT_IMAGE), Pair.create(SET_WITH_IMAGE, MOCK_IMAGE_1)
                 ));
         then(skylarkClient).should().getSetList();
-        then(skylarkClient).should().getImageOfSet("/api/images/mock-image-1/");
+        then(skylarkClient).should().getImageList();
     }
 }

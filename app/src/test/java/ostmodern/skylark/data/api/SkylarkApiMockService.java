@@ -20,15 +20,16 @@ import static org.hamcrest.Matchers.notNullValue;
 public class SkylarkApiMockService extends ExternalResource {
 
     public static final Episode EPISODE = new Episode("mock-episode-1", "test-self-1", "test-content-url-1", "episode");
-    public static final Set SET_WITHOUT_IMAGE = new Set("set-without-image", "Popular", 0, "test-body-1",
-            "test-quote-1", "test-formatted-body-1", ImmutableList.of(),
-            "test-summary-1", ImmutableList.of());
-    public static final Set SET_WITH_IMAGE = new Set("set-with-images", "Home", 2, "test-body-2",
-            "test-quote-2", "test-formatted-body-2",
-            ImmutableList.of("/api/images/mock-image-1/", "/api/images/mock-image-2/"), "test-summary-2",
+    public static final Set SET_WITHOUT_IMAGE = new Set("set-without-image", "Popular", 0,
+            "test-formatted-body-1", ImmutableList.of(),
+            ImmutableList.of());
+    public static final Set SET_WITH_IMAGE = new Set("set-with-images", "Home", 2,
+            "test-formatted-body-2",
+            ImmutableList.of("/api/images/mock-image-1/", "/api/images/mock-image-2/"),
             ImmutableList.of(EPISODE));
-    public static final Image MOCK_IMAGE_1 = new Image("mock-image-1", "test-url");
-    public static final Image DEFAULT_IMAGE = new Image("", "http://feature-code-test.skylark-cms.qa.aws.ostmodern.co.uk:8000/static/images/dummy/dummy-film.jpg");
+    public static final Image MOCK_IMAGE_1 = new Image("mock-image-1", "test-url", "/api/images/mock-image-1/");
+    public static final Image MOCK_IMAGE_2 = new Image("mock-image-2", "test-url-2", "/api/images/mock-image-2/");
+    public static final Image DEFAULT_IMAGE = new Image("", "http://feature-code-test.skylark-cms.qa.aws.ostmodern.co.uk:8000/static/images/dummy/dummy-film.jpg", "");
 
     private final MockWebServer mockWebServer;
     private String baseUrl;
@@ -45,10 +46,8 @@ public class SkylarkApiMockService extends ExternalResource {
                 switch (request.getPath()) {
                     case "/api/sets/":
                         return new MockResponse().setBody(SETS_JSON).setResponseCode(200);
-                    case "/api/images/mock-image-1/":
-                        return new MockResponse().setBody(MOCK_IMAGE_1_JSON).setResponseCode(200);
-                    case "/api/images/mock-image-2/":
-                        return new MockResponse().setBody(MOCK_IMAGE_2_JSON).setResponseCode(200);
+                    case "/api/images/":
+                        return new MockResponse().setBody(IMAGES_JSON).setResponseCode(200);
                     default:
                         return new MockResponse().setResponseCode(500);
                 }
@@ -168,7 +167,8 @@ public class SkylarkApiMockService extends ExternalResource {
             "\t}]\n" +
             "}";
 
-    private static final String MOCK_IMAGE_1_JSON = "{\n" +
+    private static final String IMAGES_JSON = "{\n" +
+            "\t\"objects\": [{\n" +
             "\t\"uid\": \"mock-image-1\",\n" +
             "\t\"show\": true,\n" +
             "\t\"schedule_urls\": [\"/api/schedules/sche_aeba759af1f44c9ca75564c363c870b6/\"],\n" +
@@ -182,7 +182,7 @@ public class SkylarkApiMockService extends ExternalResource {
             "\t\"language_ends_on\": null,\n" +
             "\t\"created\": \"2014-10-27T11:32:12.645000+00:00\",\n" +
             "\t\"image_type\": \"header\",\n" +
-            "\t\"self\": \"/api/images/imag_fcdf67481d8147e6844d838f4112faaf/\",\n" +
+            "\t\"self\": \"/api/images/mock-image-1/\",\n" +
             "\t\"title\": \"this and that\",\n" +
             "\t\"created_by\": null,\n" +
             "\t\"language_publish_on\": \"2015-06-23T14:38:52.456000+00:00\",\n" +
@@ -190,14 +190,12 @@ public class SkylarkApiMockService extends ExternalResource {
             "\t\"language_modified\": \"2015-06-23T14:38:52.456000+00:00\",\n" +
             "\t\"position\": 1,\n" +
             "\t\"align\": \"default\"\n" +
-            "}";
-
-    private static final String MOCK_IMAGE_2_JSON = "{\n" +
+            "\t}, {\n" +
             "\t\"uid\": \"mock-image-2\",\n" +
             "\t\"show\": true,\n" +
             "\t\"schedule_urls\": [\"/api/schedules/sche_aeba759af1f44c9ca75564c363c870b6/\"],\n" +
             "\t\"content_url\": \"/api/sets/coll_14bc183d0dd447d59dfc014ba1e69510/\",\n" +
-            "\t\"url\": \"https://skylark-qa-fixtures.s3.amazonaws.com/media/images/stills/film/962/promo206198293-640x360.jpg?Signature=WMRIu0o4UxDGHWX5bbH4C7z2dzM%3D&Expires=1510963395&AWSAccessKeyId=AKIAIAGQAAEZJZUE4JIA\",\n" +
+            "\t\"url\": \"test-url-2\",\n" +
             "\t\"image_type_url\": \"/api/image-types/imag_97107d1bcf0b4d88914450b4524bf919/\",\n" +
             "\t\"upload_image_url\": \"/api/images/imag_fcdf67481d8147e6844d838f4112faac/upload/\",\n" +
             "\t\"language_modified_by\": null,\n" +
@@ -206,7 +204,7 @@ public class SkylarkApiMockService extends ExternalResource {
             "\t\"language_ends_on\": null,\n" +
             "\t\"created\": \"2014-10-28T17:40:57.229000+00:00\",\n" +
             "\t\"image_type\": \"header\",\n" +
-            "\t\"self\": \"/api/images/imag_fcdf67481d8147e6844d838f4112faac/\",\n" +
+            "\t\"self\": \"/api/images/mock-image-2/\",\n" +
             "\t\"title\": \"Unidentified Sporting Crowd\",\n" +
             "\t\"created_by\": null,\n" +
             "\t\"language_publish_on\": \"2015-06-23T14:38:52.465000+00:00\",\n" +
@@ -214,6 +212,7 @@ public class SkylarkApiMockService extends ExternalResource {
             "\t\"language_modified\": \"2015-06-23T14:38:52.465000+00:00\",\n" +
             "\t\"position\": 2,\n" +
             "\t\"align\": \"default\"\n" +
+            "\t}]\n" +
             "}";
 
 }

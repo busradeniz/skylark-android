@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
@@ -98,9 +99,10 @@ public class SetDetailFragment extends Fragment implements Injectable, SetDetail
 
     @Override
     public void showSetDetails(SetUI setUI) {
-        // TODO: set image in case of error.
+
         Glide.with(getContext())
                 .load(new CustomGlideUrl(setUI.getSetEntity().getImageUrl()))
+                .apply(RequestOptions.errorOf(R.mipmap.placeholder))
                 .into(imgSet);
 
         txtSetTitle.setText(setUI.getSetEntity().getTitle());

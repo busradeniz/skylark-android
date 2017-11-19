@@ -1,4 +1,4 @@
-package ostmodern.skylark.ui;
+package ostmodern.skylark.ui.sets;
 
 import android.support.annotation.NonNull;
 
@@ -142,6 +142,6 @@ public class SetListPresenterTest {
 
     @NonNull
     private SetEntity dummySetEntity(String uid) {
-        return new SetEntity(uid, "test-title", 5, "test-body", "test-formatted-body", "test-summary", "test-image-url");
+        return new SetEntity(uid, "test-title", 5, "test-formatted-body", "test-image-url");
     }
 }

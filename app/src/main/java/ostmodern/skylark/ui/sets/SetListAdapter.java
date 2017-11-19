@@ -65,9 +65,10 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
             holder.imgFavourite.setImageDrawable(ContextCompat
                     .getDrawable(holder.itemView.getContext(), R.mipmap.unfavourite));
         }
-        // TODO: set image in case of error.
+
         Glide.with(holder.itemView.getContext())
                 .load(new CustomGlideUrl(setEntity.getImageUrl()))
+                .apply(RequestOptions.errorOf(R.mipmap.placeholder))
                 .apply(RequestOptions.bitmapTransform(new BlurTransformation(RADIUS)))
                 .into(holder.imgSet);
 

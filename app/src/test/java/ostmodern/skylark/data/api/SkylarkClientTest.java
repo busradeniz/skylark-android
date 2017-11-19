@@ -11,11 +11,12 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.subscribers.TestSubscriber;
 import okhttp3.OkHttpClient;
 import ostmodern.skylark.di.AppModule;
-import ostmodern.skylark.model.Image;
+import ostmodern.skylark.repository.remote.ImageApiResponse;
 import ostmodern.skylark.repository.remote.SetApiResponse;
 import ostmodern.skylark.repository.remote.SkylarkClient;
 
 import static ostmodern.skylark.data.api.SkylarkApiMockService.MOCK_IMAGE_1;
+import static ostmodern.skylark.data.api.SkylarkApiMockService.MOCK_IMAGE_2;
 import static ostmodern.skylark.data.api.SkylarkApiMockService.SET_WITHOUT_IMAGE;
 import static ostmodern.skylark.data.api.SkylarkApiMockService.SET_WITH_IMAGE;
 
@@ -53,19 +54,19 @@ public class SkylarkClientTest {
     }
 
     @Test
-    public void testGetImageOfSet() throws Exception {
+    public void testGetImageList() throws Exception {
         // Given
-        final String imageUrl = "/api/images/mock-image-1/";
+        // No initial state beside mock service!
 
         // When
-        TestSubscriber<Image> result = skylarkClient.getImageOfSet(imageUrl)
-                .toFlowable()
+        TestSubscriber<ImageApiResponse> result = skylarkClient.getImageList()
+                .toFlowable(BackpressureStrategy.BUFFER)
                 .test();
 
         // Then
         result.assertNoErrors()
                 .assertComplete()
                 .assertValueCount(1)
-                .assertValue(MOCK_IMAGE_1);
+                .assertValue(new ImageApiResponse(ImmutableList.of(MOCK_IMAGE_1, MOCK_IMAGE_2)));
     }
 }

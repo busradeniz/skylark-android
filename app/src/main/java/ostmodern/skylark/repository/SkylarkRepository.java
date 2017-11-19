@@ -149,6 +149,6 @@ public class SkylarkRepository {
 
     private SetEntity setEntity(Set entity, Image image) {
         return new SetEntity(entity.getUid(), entity.getTitle(), entity.getFilmCount(),
-                entity.getBody(), entity.getFormattedBody(), entity.getSummary(), image.getUrl());
+                entity.getFormattedBody(), image.getUrl());
     }
 }

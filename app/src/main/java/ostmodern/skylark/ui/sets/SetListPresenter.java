@@ -4,12 +4,12 @@ import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.SkylarkRepository;
 import ostmodern.skylark.ui.common.BaseView;
 import ostmodern.skylark.util.NetworkStatusProvider;
+import ostmodern.skylark.util.RetryPolicy;
 import ostmodern.skylark.util.SchedulerProvider;
 import timber.log.Timber;
 
 public class SetListPresenter extends SetListContract.Presenter {
 
-    private static final int RETRY_TIMES = 5;
     private final SkylarkRepository skylarkRepository;
     private final SetListContract.View view;
 
@@ -45,7 +45,7 @@ public class SetListPresenter extends SetListContract.Presenter {
 
     private void subscribeUpdateFavorStatus() {
         addDisposable(view.getFavouriteObservable()
-                .retry(RETRY_TIMES)
+                .retry(RetryPolicy.DEFAULT_RETRY_TIMES)
                 .subscribeOn(getSchedulerProvider().getIoScheduler())
                 .observeOn(getSchedulerProvider().getIoScheduler())
                 .subscribe(this::updateFavouriteStatus, throwable ->
@@ -54,6 +54,7 @@ public class SetListPresenter extends SetListContract.Presenter {
 
     private void subscribeToSkylarkService() {
         addDisposable(skylarkRepository.getSets()
+                .retry(RetryPolicy.DEFAULT_RETRY_TIMES)
                 .subscribeOn(getSchedulerProvider().getIoScheduler())
                 .observeOn(getSchedulerProvider().getUiScheduler())
                 .subscribe(view::showSetList, throwable -> Timber.e(throwable,
