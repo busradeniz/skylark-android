@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
 
     @BindView(R.id.view_error)
     NotificationView notificationView;
+
+    @BindView(R.id.txt_fetching_data)
+    TextView txtFetchingData;
 
     @Inject
     NavigationController navigationController;
@@ -68,6 +72,7 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
 
     @Override
     public void showSetList(List<SetUI> setList) {
+        updateFetchingDataViewVisibility(setList);
         setListAdapter.updateDataSet(setList);
     }
 
@@ -95,12 +100,19 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     @Override
     public void hideNotificationView(ViewNotificationType connectionNotification) {
         notificationView.hideErrorMessage(connectionNotification);
-
     }
 
     @Override
     public void showNotificationView(ViewNotificationType connectionNotification) {
         notificationView.showErrorMessage(connectionNotification);
+    }
+
+    private void updateFetchingDataViewVisibility(List<SetUI> setList) {
+        if (setList.size() == 0) {
+            txtFetchingData.setVisibility(View.VISIBLE);
+        } else {
+            txtFetchingData.setVisibility(View.GONE);
+        }
     }
 }
 

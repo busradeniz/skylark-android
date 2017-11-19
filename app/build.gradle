@@ -110,7 +110,6 @@ configurations.all {
         //Glide
         implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
         annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
-        implementation 'jp.wasabeef:glide-transformations:3.0.1'
 
 
         // Room

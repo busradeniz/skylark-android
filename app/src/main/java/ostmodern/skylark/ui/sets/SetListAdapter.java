@@ -22,7 +22,6 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.local.SetEntity;
 import ostmodern.skylark.util.CustomGlideUrl;
@@ -31,7 +30,6 @@ import ostmodern.skylarkClient.R;
 public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListViewHolder> {
 
     private static final int DEBOUNCE_TIMEOUT = 300;
-    private static final int RADIUS = 25;
     private List<SetUI> sets = new ArrayList<>();
 
     private PublishSubject<SetUI> favouriteClickSubject = PublishSubject.create();
@@ -69,7 +67,6 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
         Glide.with(holder.itemView.getContext())
                 .load(new CustomGlideUrl(setEntity.getImageUrl()))
                 .apply(RequestOptions.errorOf(R.mipmap.placeholder))
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(RADIUS)))
                 .into(holder.imgSet);
 
         RxView.clicks(holder.imgFavourite).debounce(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
