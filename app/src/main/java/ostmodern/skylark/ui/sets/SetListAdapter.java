@@ -29,7 +29,7 @@ import ostmodern.skylarkClient.R;
 
 public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListViewHolder> {
 
-    private static final int DEBOUNCE_TIMEOUT = 300;
+    private static final int DEBOUNCE_TIMEOUT = 100;
     private List<SetUI> sets = new ArrayList<>();
 
     private PublishSubject<SetUI> favouriteClickSubject = PublishSubject.create();

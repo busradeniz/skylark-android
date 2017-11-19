@@ -30,10 +30,11 @@ import ostmodern.skylark.ui.common.NotificationView;
 import ostmodern.skylark.ui.common.ViewNotificationType;
 import ostmodern.skylark.util.CustomGlideUrl;
 import ostmodern.skylarkClient.R;
+import timber.log.Timber;
 
 public class SetDetailFragment extends Fragment implements Injectable, SetDetailContract.View {
 
-    private static final int DEBOUNCE_TIMEOUT = 300;
+    private static final int DEBOUNCE_TIMEOUT = 100;
 
     @Inject
     SetDetailContract.Presenter setDetailPresenter;
@@ -71,7 +72,7 @@ public class SetDetailFragment extends Fragment implements Injectable, SetDetail
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                     setDetailPresenter.onFavouriteClicked();
-                });
+                }, throwable -> Timber.e(throwable, "Unable to handle view event"));
 
         return view;
     }
