@@ -25,6 +25,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import ostmodern.skylark.MainActivity;
 import ostmodern.skylark.di.Injectable;
 import ostmodern.skylark.model.SetUI;
+import ostmodern.skylark.ui.common.NotificationView;
+import ostmodern.skylark.ui.common.ViewNotificationType;
 import ostmodern.skylark.util.CustomGlideUrl;
 import ostmodern.skylarkClient.R;
 
@@ -49,6 +51,9 @@ public class SetDetailFragment extends Fragment implements Injectable, SetDetail
 
     @BindView(R.id.img_favourite)
     ImageView imgFavourite;
+
+    @BindView(R.id.view_error)
+    NotificationView notificationView;
 
     @Nullable
     @Override
@@ -121,4 +126,13 @@ public class SetDetailFragment extends Fragment implements Injectable, SetDetail
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public void hideNotificationView(ViewNotificationType connectionNotification) {
+        notificationView.hideErrorMessage(connectionNotification);
+    }
+
+    @Override
+    public void showNotificationView(ViewNotificationType connectionNotification) {
+        notificationView.showErrorMessage(connectionNotification);
+    }
 }

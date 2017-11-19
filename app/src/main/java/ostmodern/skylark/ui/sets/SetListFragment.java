@@ -20,6 +20,8 @@ import ostmodern.skylark.MainActivity;
 import ostmodern.skylark.di.Injectable;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.ui.common.NavigationController;
+import ostmodern.skylark.ui.common.NotificationView;
+import ostmodern.skylark.ui.common.ViewNotificationType;
 import ostmodern.skylarkClient.R;
 
 public class SetListFragment extends Fragment implements Injectable, SetListContract.View, SetListItemClickListener {
@@ -30,8 +32,12 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     @BindView(R.id.recycler_sets)
     RecyclerView recyclerViewSets;
 
+    @BindView(R.id.view_error)
+    NotificationView notificationView;
+
     @Inject
     NavigationController navigationController;
+
 
     private SetListAdapter setListAdapter;
 
@@ -85,6 +91,17 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     private void setActionBar() {
         MainActivity activity = (MainActivity) getActivity();
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public void hideNotificationView(ViewNotificationType connectionNotification) {
+        notificationView.hideErrorMessage(connectionNotification);
+
+    }
+
+    @Override
+    public void showNotificationView(ViewNotificationType connectionNotification) {
+        notificationView.showErrorMessage(connectionNotification);
     }
 }
 

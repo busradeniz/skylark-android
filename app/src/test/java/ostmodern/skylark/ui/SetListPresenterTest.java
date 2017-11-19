@@ -21,6 +21,7 @@ import ostmodern.skylark.repository.SkylarkRepository;
 import ostmodern.skylark.repository.local.SetEntity;
 import ostmodern.skylark.ui.sets.SetListContract;
 import ostmodern.skylark.ui.sets.SetListPresenter;
+import ostmodern.skylark.util.NetworkStatusProvider;
 import ostmodern.skylark.util.SchedulerProvider;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -38,12 +39,16 @@ public class SetListPresenterTest {
     @Mock
     private SetListContract.View view;
 
+    @Mock
+    private NetworkStatusProvider networkStatusProvider;
+
     private SetListPresenter setListPresenter; // SUT
 
     @Before
     public void setUp() throws Exception {
         setListPresenter = new SetListPresenter(skylarkRepository, view,
-                new SchedulerProvider(Schedulers.trampoline(), Schedulers.trampoline()));
+                new SchedulerProvider(Schedulers.trampoline(), Schedulers.trampoline()),
+                networkStatusProvider);
     }
 
     @Test
@@ -51,14 +56,16 @@ public class SetListPresenterTest {
         // Given
         given(view.getFavouriteObservable()).willReturn(Observable.empty());
         given(skylarkRepository.getSets()).willReturn(Flowable.empty());
+        given(networkStatusProvider.isConnected()).willReturn(Observable.empty());
 
         // When
         setListPresenter.subscribe();
 
         // Then
-        assertThat(setListPresenter.getDisposables(), hasSize(2));
+        assertThat(setListPresenter.getDisposables(), hasSize(3));
         then(view).should().getFavouriteObservable();
         then(skylarkRepository).should().getSets();
+        then(networkStatusProvider).should().isConnected();
     }
 
     @Test
@@ -83,12 +90,13 @@ public class SetListPresenterTest {
         List<SetUI> setUIs = ImmutableList.of(new SetUI(dummySetEntity("test-uid"), false));
         given(skylarkRepository.getSets()).willReturn(Flowable.just(setUIs));
         given(view.getFavouriteObservable()).willReturn(Observable.empty());
+        given(networkStatusProvider.isConnected()).willReturn(Observable.empty());
 
         // When
         setListPresenter.subscribe();
 
         // Then
-        assertThat(setListPresenter.getDisposables(), hasSize(2));
+        assertThat(setListPresenter.getDisposables(), hasSize(3));
         then(view).should().getFavouriteObservable();
         then(skylarkRepository).should().getSets();
         then(view).should().showSetList(setUIs);
@@ -101,12 +109,13 @@ public class SetListPresenterTest {
         SetUI setUI = new SetUI(dummySetEntity(uid), true); // Should trigger favorite
         given(view.getFavouriteObservable()).willReturn(Observable.just(setUI));
         given(skylarkRepository.getSets()).willReturn(Flowable.empty());
+        given(networkStatusProvider.isConnected()).willReturn(Observable.empty());
 
         // When
         setListPresenter.subscribe();
 
         // Then
-        assertThat(setListPresenter.getDisposables(), hasSize(2));
+        assertThat(setListPresenter.getDisposables(), hasSize(3));
         then(view).should().getFavouriteObservable();
         then(skylarkRepository).should().getSets();
         then(skylarkRepository).should().favorite(uid);
@@ -119,12 +128,13 @@ public class SetListPresenterTest {
         SetUI setUI = new SetUI(dummySetEntity(uid), false); // Should trigger unfavorite
         given(view.getFavouriteObservable()).willReturn(Observable.just(setUI));
         given(skylarkRepository.getSets()).willReturn(Flowable.empty());
+        given(networkStatusProvider.isConnected()).willReturn(Observable.empty());
 
         // When
         setListPresenter.subscribe();
 
         // Then
-        assertThat(setListPresenter.getDisposables(), hasSize(2));
+        assertThat(setListPresenter.getDisposables(), hasSize(3));
         then(view).should().getFavouriteObservable();
         then(skylarkRepository).should().getSets();
         then(skylarkRepository).should().unfavorite(uid);

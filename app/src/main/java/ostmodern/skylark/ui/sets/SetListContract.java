@@ -5,11 +5,14 @@ import java.util.List;
 import io.reactivex.Observable;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.ui.common.BasePresenter;
+import ostmodern.skylark.ui.common.BaseView;
+import ostmodern.skylark.util.NetworkStatusProvider;
+import ostmodern.skylark.util.SchedulerProvider;
 
 public interface SetListContract {
 
 
-    interface View {
+    interface View extends BaseView {
 
         /**
          * Shows set list on screen.
@@ -27,7 +30,11 @@ public interface SetListContract {
         Observable<SetUI> getFavouriteObservable();
     }
 
-    interface Presenter extends BasePresenter {
+    abstract class Presenter extends BasePresenter {
 
+        Presenter(SchedulerProvider schedulerProvider,
+                  NetworkStatusProvider networkStatusProvider) {
+            super(schedulerProvider, networkStatusProvider);
+        }
     }
 }

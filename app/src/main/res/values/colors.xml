@@ -5,4 +5,9 @@
     <color name="colorPrimary">#0097A7</color>
     <color name="colorPrimaryDark">#00BCD4</color>
     <color name="colorAccent">#999999</color>
+
+
+    <color name="errorViewRed">#FF2424</color>
+    <color name="infoViewGreen">#03DB69</color>
+
 </resources>

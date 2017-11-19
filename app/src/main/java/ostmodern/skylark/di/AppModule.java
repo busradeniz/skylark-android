@@ -24,6 +24,7 @@ import ostmodern.skylark.repository.local.SkylarkDatabase;
 import ostmodern.skylark.repository.remote.SkylarkClient;
 import ostmodern.skylark.repository.remote.SkylarkService;
 import ostmodern.skylark.util.Logs;
+import ostmodern.skylark.util.NetworkStatusProvider;
 import ostmodern.skylark.util.ReleaseTree;
 import ostmodern.skylark.util.SchedulerProvider;
 import ostmodern.skylarkClient.BuildConfig;
@@ -138,5 +139,11 @@ public class AppModule {
     @Provides
     SchedulerProvider providesSchedulerProvider() {
         return new SchedulerProvider(AndroidSchedulers.mainThread(), Schedulers.io());
+    }
+
+    @Singleton
+    @Provides
+    NetworkStatusProvider provideNetworkStatusProvider(Application application) {
+        return new NetworkStatusProvider(application);
     }
 }

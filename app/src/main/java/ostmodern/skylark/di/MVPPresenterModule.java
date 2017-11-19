@@ -8,6 +8,7 @@ import ostmodern.skylark.ui.detail.SetDetailContract;
 import ostmodern.skylark.ui.detail.SetDetailPresenter;
 import ostmodern.skylark.ui.sets.SetListContract;
 import ostmodern.skylark.ui.sets.SetListPresenter;
+import ostmodern.skylark.util.NetworkStatusProvider;
 import ostmodern.skylark.util.SchedulerProvider;
 
 
@@ -15,17 +16,21 @@ import ostmodern.skylark.util.SchedulerProvider;
 public class MVPPresenterModule {
 
     @Provides
-    SetDetailContract.Presenter provideSetDetailPresenter(SetDetailContract.View view,
-                                                          SkylarkRepository skylarkRepository,
-                                                          SchedulerProvider schedulerProvider) {
-        return new SetDetailPresenter(skylarkRepository, view, schedulerProvider);
+    SetDetailContract.Presenter setDetailPresenter(SetDetailContract.View view,
+                                                   SkylarkRepository skylarkRepository,
+                                                   SchedulerProvider schedulerProvider,
+                                                   NetworkStatusProvider networkStatusProvider) {
+        return new SetDetailPresenter(skylarkRepository, view, schedulerProvider,
+                networkStatusProvider);
     }
 
     @Provides
-    SetListContract.Presenter provideSetListPresenter(SetListContract.View view,
-                                                      SkylarkRepository skylarkRepository,
-                                                      SchedulerProvider schedulerProvider) {
-        return new SetListPresenter(skylarkRepository, view, schedulerProvider);
+    SetListContract.Presenter setListPresenter(SetListContract.View view,
+                                               SkylarkRepository skylarkRepository,
+                                               SchedulerProvider schedulerProvider,
+                                               NetworkStatusProvider networkStatusProvider) {
+        return new SetListPresenter(skylarkRepository, view, schedulerProvider,
+                networkStatusProvider);
     }
 
 

@@ -8,6 +8,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ostmodern.skylark.ui.common.NotificationView
+            android:id="@+id/view_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/img_set"
             android:layout_width="match_parent"

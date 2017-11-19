@@ -8,4 +8,7 @@
     <dimen name="set_detail_title_txt_size">20sp</dimen>
     <dimen name="set_detail_body_txt_size">16sp</dimen>
 
+    <!--error message view-->
+    <dimen name="view_error_message_padding">10dp</dimen>
+
 </resources>
