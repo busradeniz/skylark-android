@@ -3,8 +3,8 @@
 
     <string name="films">Films</string>
 
-    <string name="network_connectivity_error_message">Sorry, we are not able to getting latest updates since your internet connection looks down. Please check your internet connection!</string>
-    <string name="network_connectivity_info_message">Internet connection is back now!</string>
+    <string name="network_connectivity_error_message">Sorry, You are seeing cached data right now since your internet connection looks down. Please check your internet connection to see latest updates!</string>
+    <string name="network_connectivity_info_message">Woow, Internet connection is back now!</string>
     <string name="api_error_message">Sorry, we are having some technical glitches right now, will be back as soon as possible.</string>
 
 </resources>
