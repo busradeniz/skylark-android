@@ -3,6 +3,7 @@ package ostmodern.skylark;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import javax.inject.Inject;
 
@@ -32,5 +33,13 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         return dispatchingAndroidInjector;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

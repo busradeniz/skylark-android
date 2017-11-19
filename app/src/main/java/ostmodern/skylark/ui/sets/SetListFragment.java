@@ -1,4 +1,4 @@
-package ostmodern.skylark.ui;
+package ostmodern.skylark.ui.sets;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,17 +16,22 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
+import ostmodern.skylark.MainActivity;
 import ostmodern.skylark.di.Injectable;
 import ostmodern.skylark.model.SetUI;
+import ostmodern.skylark.ui.common.NavigationController;
 import ostmodern.skylarkClient.R;
 
-public class SetListFragment extends Fragment implements Injectable, SetListContract.View {
+public class SetListFragment extends Fragment implements Injectable, SetListContract.View, SetListItemClickListener {
 
     @Inject
     SetListContract.Presenter setListPresenter;
 
     @BindView(R.id.recycler_sets)
     RecyclerView recyclerViewSets;
+
+    @Inject
+    NavigationController navigationController;
 
     private SetListAdapter setListAdapter;
 
@@ -40,6 +45,7 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
         ButterKnife.bind(this, view);
         initSetsRecyclerView();
 
+        setActionBar();
         return view;
     }
 
@@ -61,7 +67,7 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     }
 
     private void initSetsRecyclerView() {
-        setListAdapter = new SetListAdapter();
+        setListAdapter = new SetListAdapter(this);
         recyclerViewSets.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerViewSets.setAdapter(setListAdapter);
     }
@@ -69,6 +75,16 @@ public class SetListFragment extends Fragment implements Injectable, SetListCont
     @Override
     public Observable<SetUI> getFavouriteObservable() {
         return setListAdapter.getFavouriteObservable();
+    }
+
+    @Override
+    public void itemClicked(String setId) {
+        navigationController.navigateToSetDetail(setId);
+    }
+
+    private void setActionBar() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 }
 

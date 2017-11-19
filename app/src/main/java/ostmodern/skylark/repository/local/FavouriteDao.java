@@ -9,6 +9,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface FavouriteDao {
@@ -18,6 +19,9 @@ public interface FavouriteDao {
 
     @Query("SELECT * FROM favourites")
     Flowable<List<FavouriteEntity>> getAll();
+
+    @Query("SELECT * FROM favourites WHERE setId = :uid")
+    Maybe<FavouriteEntity> getFavouriteById(String uid);
 
     @Delete
     void deleteFavourite(FavouriteEntity favouriteEntity);

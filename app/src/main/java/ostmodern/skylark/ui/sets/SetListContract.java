@@ -1,10 +1,10 @@
-package ostmodern.skylark.ui;
+package ostmodern.skylark.ui.sets;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import ostmodern.skylark.common.BasePresenter;
 import ostmodern.skylark.model.SetUI;
+import ostmodern.skylark.ui.common.BasePresenter;
 
 public interface SetListContract {
 
@@ -28,5 +28,6 @@ public interface SetListContract {
     }
 
     interface Presenter extends BasePresenter {
+
     }
 }

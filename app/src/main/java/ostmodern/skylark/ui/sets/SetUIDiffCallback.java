@@ -1,4 +1,4 @@
-package ostmodern.skylark.ui;
+package ostmodern.skylark.ui.sets;
 
 import android.support.v7.util.DiffUtil;
 

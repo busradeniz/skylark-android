@@ -1,4 +1,4 @@
-package ostmodern.skylark.ui;
+package ostmodern.skylark.ui.sets;
 
 
 import android.support.annotation.VisibleForTesting;
@@ -14,6 +14,7 @@ import timber.log.Timber;
 
 public class SetListPresenter implements SetListContract.Presenter {
 
+    private static final int RETRY_TIMES = 5;
     private final SkylarkRepository skylarkRepository;
     private final SetListContract.View view;
     private final SchedulerProvider schedulerProvider;
@@ -45,6 +46,7 @@ public class SetListPresenter implements SetListContract.Presenter {
 
     private void subscribeUpdateFavorStatus() {
         disposables.add(view.getFavouriteObservable()
+                .retry(RETRY_TIMES)
                 .subscribeOn(schedulerProvider.getIoScheduler())
                 .observeOn(schedulerProvider.getIoScheduler())
                 .subscribe(this::updateFavouriteStatus, throwable ->

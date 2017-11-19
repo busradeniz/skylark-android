@@ -1,4 +1,4 @@
-package ostmodern.skylark.common;
+package ostmodern.skylark.ui.common;
 
 public interface BasePresenter {
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/txt_set_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/set_detail_title_txt_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_film_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_set_title"
+                android:textSize="@dimen/set_film_count_txt_size" />
+
+            <ImageView
+                android:id="@+id/img_favourite"
+                android:layout_width="@dimen/img_favourite_size_detail"
+                android:layout_height="@dimen/img_favourite_size_detail"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackground"
+                android:src="@mipmap/unfavourite" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_set_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:textSize="@dimen/set_detail_body_txt_size" />
+
+    </LinearLayout>
+</ScrollView>

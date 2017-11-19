@@ -1,4 +1,4 @@
-package ostmodern.skylark.ui;
+package ostmodern.skylark.ui.sets;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.local.SetEntity;
 import ostmodern.skylark.util.CustomGlideUrl;
@@ -28,10 +30,16 @@ import ostmodern.skylarkClient.R;
 
 public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListViewHolder> {
 
-    public static final int DEBOUNCE_TIMEOUT = 300;
+    private static final int DEBOUNCE_TIMEOUT = 300;
+    private static final int RADIUS = 25;
     private List<SetUI> sets = new ArrayList<>();
 
     private PublishSubject<SetUI> favouriteClickSubject = PublishSubject.create();
+    private final SetListItemClickListener itemClickListener;
+
+    public SetListAdapter(SetListItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     @Override
     public SetListAdapter.SetListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -60,6 +68,7 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
         // TODO: set image in case of error.
         Glide.with(holder.itemView.getContext())
                 .load(new CustomGlideUrl(setEntity.getImageUrl()))
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(RADIUS)))
                 .into(holder.imgSet);
 
         RxView.clicks(holder.imgFavourite).debounce(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -69,6 +78,8 @@ public class SetListAdapter extends RecyclerView.Adapter<SetListAdapter.SetListV
                     favouriteClickSubject.onNext(sets.get(position));
                     notifyItemChanged(position);
                 });
+
+        holder.itemView.setOnClickListener(v -> itemClickListener.itemClicked(setEntity.getUid()));
     }
 
     @Override

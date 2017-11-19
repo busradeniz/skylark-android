@@ -32,12 +32,12 @@
 
     <ImageView
         android:id="@+id/img_favourite"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/img_favourite_size"
+        android:layout_height="@dimen/img_favourite_size"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/img_favourite_margin"
+        android:layout_marginTop="@dimen/img_favourite_margin"
         android:background="?attr/selectableItemBackground"
         android:src="@mipmap/unfavourite" />
 </RelativeLayout>

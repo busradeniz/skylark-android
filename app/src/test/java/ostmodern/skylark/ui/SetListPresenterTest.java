@@ -19,6 +19,8 @@ import io.reactivex.schedulers.Schedulers;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.SkylarkRepository;
 import ostmodern.skylark.repository.local.SetEntity;
+import ostmodern.skylark.ui.sets.SetListContract;
+import ostmodern.skylark.ui.sets.SetListPresenter;
 import ostmodern.skylark.util.SchedulerProvider;
 
 import static org.hamcrest.Matchers.hasSize;

@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import ostmodern.skylark.model.Episode;
 import ostmodern.skylark.model.Image;
@@ -63,14 +64,46 @@ public class SkylarkRepository {
         }, BackpressureStrategy.BUFFER);
     }
 
+    /**
+     * Insert a new {@link FavouriteEntity} into database.
+     *
+     * @param setId id of set.
+     */
     public void favorite(String setId) {
         final FavouriteEntity favouriteEntity = new FavouriteEntity(setId);
         skylarkDatabase.favouriteDao().insertFavourite(favouriteEntity);
     }
 
+    /**
+     * Deletes the given {@link FavouriteEntity} from database.
+     *
+     * @param setId id of set
+     */
     public void unfavorite(String setId) {
         final FavouriteEntity favouriteEntity = new FavouriteEntity(setId);
         skylarkDatabase.favouriteDao().deleteFavourite(favouriteEntity);
+    }
+
+    /**
+     * Fetches the set according to given id.
+     *
+     * @param uid id of set.
+     * @return {@link Flowable}
+     */
+    public Maybe<SetUI> getSetById(String uid) {
+        return Maybe.zip(
+                skylarkDatabase.setDao().getSetById(uid),
+                skylarkDatabase.favouriteDao().getFavouriteById(uid).defaultIfEmpty(new FavouriteEntity("")),
+                (setEntity, favouriteEntity)
+                        -> mergeAndConvertSet(setEntity, favouriteEntity));
+    }
+
+    private SetUI mergeAndConvertSet(SetEntity setEntity, FavouriteEntity favouriteEntity) {
+        boolean isFavourite = false;
+        if (favouriteEntity != null && !favouriteEntity.setId.isEmpty()) {
+            isFavourite = true;
+        }
+        return new SetUI(setEntity, isFavourite);
     }
 
     private List<SetUI> mergeAndConvertSetList(List<SetEntity> setEntities,
