@@ -80,9 +80,9 @@ public class SetDetailPresenter extends SetDetailContract.Presenter {
 
     private void updateFavouriteStatus() {
         if (selectedSet.isFavourite()) {
-            skylarkRepository.favorite(selectedSet.getSetEntity().uid);
+            skylarkRepository.favorite(selectedSet.getSetEntity().getUid());
         } else {
-            skylarkRepository.unfavorite(selectedSet.getSetEntity().uid);
+            skylarkRepository.unfavorite(selectedSet.getSetEntity().getUid());
         }
     }
 

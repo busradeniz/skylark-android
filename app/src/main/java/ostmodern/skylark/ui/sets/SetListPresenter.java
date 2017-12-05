@@ -64,9 +64,9 @@ public class SetListPresenter extends SetListContract.Presenter {
 
     private void updateFavouriteStatus(SetUI setUI) {
         if (setUI.isFavourite()) {
-            skylarkRepository.favorite(setUI.getSetEntity().uid);
+            skylarkRepository.favorite(setUI.getSetEntity().getUid());
         } else {
-            skylarkRepository.unfavorite(setUI.getSetEntity().uid);
+            skylarkRepository.unfavorite(setUI.getSetEntity().getUid());
         }
     }
 }

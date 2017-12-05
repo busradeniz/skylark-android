@@ -14,7 +14,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ostmodern.skylark.model.SetUI;
 import ostmodern.skylark.repository.SkylarkRepository;
-import ostmodern.skylark.repository.local.SetEntity;
 import ostmodern.skylark.util.NetworkStatusProvider;
 import ostmodern.skylark.util.SchedulerProvider;
 

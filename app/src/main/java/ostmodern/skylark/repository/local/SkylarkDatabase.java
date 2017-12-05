@@ -11,3 +11,5 @@ public abstract class SkylarkDatabase extends RoomDatabase {
 
     public abstract FavouriteDao favouriteDao();
 }
+
+

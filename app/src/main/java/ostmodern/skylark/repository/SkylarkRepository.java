@@ -57,7 +57,7 @@ public class SkylarkRepository {
             @Override
             public void saveCallResult(List<Pair<Set, Image>> data) {
                 skylarkDatabase.setDao().insert(convert(data));
-                List<EpisodeEntity> episodeEntities = convertEpisodeEntities(data);
+                ArrayList<EpisodeEntity> episodeEntities = convertEpisodeEntities(data);
                 skylarkDatabase.episodeDao().insertEpisodes(episodeEntities);
             }
 
@@ -113,7 +113,7 @@ public class SkylarkRepository {
         for (SetEntity setEntity : setEntities) {
             boolean isFavourite = false;
             for (FavouriteEntity favouriteEntity : favouriteEntities) {
-                if (Objects.equals(favouriteEntity.setId, setEntity.uid)) {
+                if (Objects.equals(favouriteEntity.setId, setEntity.getUid())) {
                     isFavourite = true;
                 }
             }
@@ -122,8 +122,8 @@ public class SkylarkRepository {
         return setUIList;
     }
 
-    private List<SetEntity> convert(List<Pair<Set, Image>> sets) {
-        final List<SetEntity> setEntities = new ArrayList<>();
+    private ArrayList<SetEntity> convert(List<Pair<Set, Image>> sets) {
+        final ArrayList<SetEntity> setEntities = new ArrayList<>();
         for (Pair<Set, Image> pair : sets) {
             setEntities.add(setEntity(pair.first, pair.second));
         }
@@ -131,8 +131,8 @@ public class SkylarkRepository {
         return setEntities;
     }
 
-    private List<EpisodeEntity> convertEpisodeEntities(List<Pair<Set, Image>> sets) {
-        final List<EpisodeEntity> episodeEntities = new ArrayList<>();
+    private ArrayList<EpisodeEntity> convertEpisodeEntities(List<Pair<Set, Image>> sets) {
+        final ArrayList<EpisodeEntity> episodeEntities = new ArrayList<>();
         for (Pair<Set, Image> pair : sets) {
             for (Episode episode : pair.first.getItems()) {
                 episodeEntities.add(episodeEntity(pair.first.getUid(), episode));
