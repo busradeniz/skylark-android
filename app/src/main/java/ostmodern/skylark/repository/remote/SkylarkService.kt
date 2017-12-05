@@ -36,7 +36,7 @@ class SkylarkService(val skylarkClient: SkylarkClient) {
             if (set.imageUrls.isEmpty()) {
                 setWithImageList.add(Pair(set, DEFAULT_IMAGE))
             } else {
-                setWithImageList.add(Pair(set, images.get(set.imageUrls[0])) as Pair<Set, Image>)
+                setWithImageList.add(Pair(set, images[set.imageUrls[0]]) as Pair<Set, Image>)
             }
         }
         return setWithImageList
