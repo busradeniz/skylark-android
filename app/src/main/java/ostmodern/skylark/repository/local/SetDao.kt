@@ -17,6 +17,6 @@ interface SetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sets: ArrayList<SetEntity>)
 
-    @Query("SELECT * FROM sets WHERE uid = :arg0")
+    @Query("SELECT * FROM sets WHERE uid =  :setId")
     fun getSetById(setId: String): Maybe<SetEntity>
 }

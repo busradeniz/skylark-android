@@ -13,6 +13,6 @@ interface EpisodeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEpisodes(episodes: ArrayList<EpisodeEntity>)
 
-    @Query("SELECT * FROM episodes WHERE setId = :arg0")
+    @Query("SELECT * FROM episodes WHERE setId = :uid")
     fun getEpisodesForSet(uid: String): Flowable<List<EpisodeEntity>>
 }

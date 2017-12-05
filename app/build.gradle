@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply from: '../config/quality/quality.gradle'
 
 android {
@@ -99,23 +100,23 @@ configurations.all {
 
         //Butterknife
         implementation "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-        annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+        kapt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
 
         // Dagger
         implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
         implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
         implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
-        annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
-        annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+        kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+        kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
         //Glide
         implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
-        annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+        kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
 
         // Room
         implementation "android.arch.persistence.room:runtime:$rootProject.archComponentVersion"
-        annotationProcessor "android.arch.persistence.room:compiler:$rootProject.archComponentVersion"
+        kapt "android.arch.persistence.room:compiler:$rootProject.archComponentVersion"
         implementation "android.arch.persistence.room:rxjava2:$rootProject.archComponentVersion"
 
         // Test libraries

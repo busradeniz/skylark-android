@@ -100,7 +100,7 @@ public class SkylarkRepository {
 
     private SetUI mergeAndConvertSet(SetEntity setEntity, FavouriteEntity favouriteEntity) {
         boolean isFavourite = false;
-        if (favouriteEntity != null && !favouriteEntity.setId.isEmpty()) {
+        if (favouriteEntity != null && !favouriteEntity.getSetId().isEmpty()) {
             isFavourite = true;
         }
         return new SetUI(setEntity, isFavourite);
@@ -113,7 +113,7 @@ public class SkylarkRepository {
         for (SetEntity setEntity : setEntities) {
             boolean isFavourite = false;
             for (FavouriteEntity favouriteEntity : favouriteEntities) {
-                if (Objects.equals(favouriteEntity.setId, setEntity.getUid())) {
+                if (Objects.equals(favouriteEntity.getSetId(), setEntity.getUid())) {
                     isFavourite = true;
                 }
             }

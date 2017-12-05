@@ -18,7 +18,7 @@ interface FavouriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavourite(favouriteEntity: FavouriteEntity)
 
-    @Query("SELECT * FROM favourites WHERE setId = :arg0")
+    @Query("SELECT * FROM favourites WHERE setId = :uid")
     fun getFavouriteById(uid: String): Maybe<FavouriteEntity>
 
     @Delete
