@@ -15,14 +15,12 @@ import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.subscribers.TestSubscriber;
 import ostmodern.skylark.model.Image;
 import ostmodern.skylark.model.Set;
 import ostmodern.skylark.repository.remote.ImageApiResponse;
 import ostmodern.skylark.repository.remote.SetApiResponse;
 import ostmodern.skylark.repository.remote.SkylarkClient;
-import ostmodern.skylark.repository.remote.SkylarkService;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;

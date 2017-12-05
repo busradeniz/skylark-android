@@ -5,7 +5,7 @@ import android.arch.persistence.room.*
 @Entity(tableName = "episodes",
         foreignKeys = [(ForeignKey(entity = SetEntity::class, parentColumns = arrayOf("uid"),
                 childColumns = arrayOf("setId")))], indices = [(Index("setId"))])
-class EpisodeEntity (@field:PrimaryKey var uid: String,
-                     @field:ColumnInfo(name = "contentUrl") var contentUrl: String,
-                     @field:ColumnInfo(name = "contentType") var contentType: String,
-                     @field:ColumnInfo(name = "setId") var setId: String)
+data class EpisodeEntity (@field:PrimaryKey val uid: String,
+                     @field:ColumnInfo(name = "contentUrl") val contentUrl: String,
+                     @field:ColumnInfo(name = "contentType") val contentType: String,
+                     @field:ColumnInfo(name = "setId") val setId: String)

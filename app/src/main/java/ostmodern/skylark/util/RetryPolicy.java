@@ -13,7 +13,7 @@ public final class RetryPolicy {
     /**
      * Each service call will retry this amount of times.
      */
-    public static final int DEFAULT_RETRY_TIMES = 5;
+    public static final long DEFAULT_RETRY_TIMES = 5;
 
     /**
      * Checks if an exception is retryable or not.
